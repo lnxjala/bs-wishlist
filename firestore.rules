@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Datos del evento: todos pueden leer, cualquiera puede escribir
+    // (protegido en la práctica por el PIN del panel de organizador,
+    // ver nota de seguridad en el README).
+    match /event/{doc} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    match /gifts/{giftId} {
+      allow read: if true;
+      allow write: if true;
+
+      match /reservas/{reservaId} {
+        allow read: if true;
+        // Cualquier invitado puede crear una reserva (así funciona "reservar regalo")
+        allow create: if true;
+        // Nadie borra ni edita reservas desde la app (evita que alguien
+        // "libere" el regalo de otra persona).
+        allow update, delete: if false;
+      }
+    }
+  }
+}

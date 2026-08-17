@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Baby Shower · Dino Baby 🦕</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Caveat:wght@600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- PRECARGA: transición family1 -> family2 -->
+  <div class="loader-overlay" id="loader-overlay">
+  <div class="loader-stage">
+    <img class="loader-img loader-img-1" src="assets/images/family1.png" alt="">
+    <img class="loader-img loader-img-2" src="assets/images/family2.png" alt="">
+  </div>
+  <div class="loader-paws" aria-hidden="true">
+    <span class="loader-paw"></span>
+    <span class="loader-paw"></span>
+    <span class="loader-paw"></span>
+    <span class="loader-paw"></span>
+  </div>
+  <p class="loader-text">Preparando la sorpresa…</p>
+</div>
+
+  <!-- NAV -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#top">
+        <img src="assets/images/eggdinobaby.png" alt="" class="nav-brand-img">
+      </a>
+      <div class="nav-links">
+        <a href="#top">Inicio</a>
+        <a href="#detalles">Detalles</a>
+        <a href="#regalos-section">Regalos</a>
+        <a href="#confirmar">Confirmar</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <span class="paw paw-1" aria-hidden="true"></span>
+    <span class="paw paw-2" aria-hidden="true"></span>
+    <span class="paw paw-3" aria-hidden="true"></span>
+    <span class="paw paw-4" aria-hidden="true"></span>
+
+    <img class="hero-dino hero-dino-left" src="assets/images/dinoblue.png" alt="">
+    <img class="hero-dino hero-dino-right" src="assets/images/dinogreen.png" alt="">
+
+    <div class="hero-inner">
+      <p class="eyebrow">Acompáñanos a un</p>
+      <h1 class="hero-title">
+        Baby<br>
+        <span class="hero-script">Shower</span>
+      </h1>
+      <p class="hero-tag" id="event-title">Dino Baby</p>
+      <p class="hero-message" id="event-message">Cargando los detalles del evento…</p>
+    </div>
+  </header>
+
+  <!-- FALTA MUY POCO (countdown) -->
+  <section class="countdown-section">
+    <span class="paw paw-5" aria-hidden="true"></span>
+    <img class="countdown-dino" src="assets/images/dinogreen2.png" alt="">
+    <div class="countdown-inner">
+      <p class="countdown-label">💚 Falta muy poco</p>
+      <p class="countdown-sub">para nuestra gran aventura</p>
+      <div class="countdown" id="countdown" hidden>
+        <div class="countdown-grid">
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-days">00</span>
+            <span class="countdown-text">días</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-hours">00</span>
+            <span class="countdown-text">hrs</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-mins">00</span>
+            <span class="countdown-text">min</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-secs">00</span>
+            <span class="countdown-text">seg</span>
+          </div>
+        </div>
+      </div>
+      <p class="countdown-done" id="countdown-done" hidden>¡Hoy conoceremos al bebé dinosaurio! 🦕🎉</p>
+    </div>
+  </section>
+
+  <!-- CONFIRMAR / TE ESPERAMOS -->
+  <section class="confirm-section" id="confirmar">
+    <img class="confirm-dino confirm-dino-left" src="assets/images/dinoblue2.png" alt="">
+    <img class="confirm-dino confirm-dino-right" src="assets/images/dinogreen.png" alt="">
+    <div class="confirm-inner">
+      <p class="confirm-title">💚 ¡Te esperamos!</p>
+      <p class="confirm-text">Tu compañía hará de este día un recuerdo inolvidable para nosotros. Prepárate para juegos, risas y mucha diversión.</p>
+      <div class="confirm-actions">
+        <a href="#detalles" class="confirm-btn">
+          <span class="confirm-btn-icon">📍</span>
+          <span>
+            <strong>Ver ubicación</strong>
+            <small>Guarda la fecha y el lugar</small>
+          </span>
+        </a>
+        <a href="#regalos-section" class="confirm-btn">
+          <span class="confirm-btn-icon">🎁</span>
+          <span>
+            <strong>Regalos</strong>
+            <small>Ver sugerencias de regalo</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVISOR TIPO OLA -->
+  <div class="wave-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <path d="M0,40 C240,85 480,0 720,22 C960,44 1200,85 1440,35 L1440,80 L0,80 Z" fill="var(--cream)"/>
+    </svg>
+  </div>
+
+  <!-- CAMINO DE CRECIMIENTO -->
+  <section class="growth-wrap">
+    <div class="growth-label">
+      <span id="growth-count">0 de 0</span> regalos completos
+    </div>
+    <svg class="growth-vine" viewBox="0 0 640 60" preserveAspectRatio="none" aria-hidden="true">
+      <line x1="10" y1="45" x2="630" y2="45" stroke="var(--line)" stroke-width="2" stroke-dasharray="1 8" stroke-linecap="round"/>
+      <line id="growth-fill" x1="10" y1="45" x2="10" y2="45" stroke="var(--olive)" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+  </section>
+
+  <!-- REPRODUCTOR DE MÚSICA -->
+  <button class="music-toggle" id="music-toggle" aria-label="Reproducir música" title="Música de fondo" hidden>
+    <span class="music-icon music-icon-play">🎵</span>
+    <span class="music-icon music-icon-pause" hidden>⏸</span>
+  </button>
+  <audio id="bg-music" loop preload="metadata"></audio>
+
+  <!-- GRID DE REGALOS -->
+  <main class="gifts-section" id="regalos-section">
+    <h2>🎁 Regalitos 🎁</h2>
+    <div class="gifts-filters" id="gifts-filters" hidden>
+      <button class="filter-btn active" data-filter="disponibles" data-label="Disponibles">Disponibles</button>
+      <button class="filter-btn" data-filter="completados" data-label="Completados">Completados</button>
+      <button class="filter-btn" data-filter="todos" data-label="Todos">Todos</button>
+    </div>
+    <div class="gifts-grid" id="gifts-grid">
+      <p class="loading-text">Cargando regalos…</p>
+    </div>
+  </main>
+
+  <!-- BOTÓN ORGANIZADOR -->
+  <footer class="site-footer">
+    <p class="footer-thanks">🦕 Gracias por ser parte de esta gran aventura 🦕</p>
+    <button class="admin-link" id="admin-toggle">¿Eres el organizador?</button>
+  </footer>
+
+  <!-- MODAL: RESERVAR REGALO -->
+  <div class="modal-backdrop" id="claim-modal">
+    <div class="modal">
+      <button class="modal-close" data-close="claim-modal" aria-label="Cerrar">×</button>
+      <h3 id="claim-modal-title">Reservar regalo</h3>
+      <p class="modal-sub" id="claim-modal-sub"></p>
+      <form id="claim-form">
+        <label>
+          Tu nombre
+          <input type="text" id="claim-name" required placeholder="Ej. María Torres" maxlength="60">
+        </label>
+        <label id="claim-qty-wrap" style="display:none">
+          Cantidad que llevarás
+          <input type="number" id="claim-qty" min="1" value="1">
+        </label>
+        <button type="submit" class="btn-primary">Confirmar reserva</button>
+      </form>
+      <p class="modal-error" id="claim-error"></p>
+    </div>
+  </div>
+
+  <!-- MODAL: PIN ORGANIZADOR -->
+  <div class="modal-backdrop" id="pin-modal">
+    <div class="modal">
+      <button class="modal-close" data-close="pin-modal" aria-label="Cerrar">×</button>
+      <h3>Acceso de organizador</h3>
+      <p class="modal-sub">Ingresa el PIN para agregar o quitar regalos.</p>
+      <form id="pin-form">
+        <label>
+          PIN
+          <input type="password" id="pin-input" required inputmode="numeric" maxlength="12">
+        </label>
+        <button type="submit" class="btn-primary">Entrar</button>
+      </form>
+      <p class="modal-error" id="pin-error"></p>
+    </div>
+  </div>
+
+  <!-- PANEL ADMIN -->
+  <div class="modal-backdrop" id="admin-modal">
+    <div class="modal modal-wide">
+      <button class="modal-close" data-close="admin-modal" aria-label="Cerrar">×</button>
+      <h3>Panel de organizador</h3>
+
+      <details class="admin-block" id="admin-block-gift" open>
+        <summary>Agregar regalo</summary>
+        <form id="gift-form">
+          <label>
+            Nombre del regalo
+            <input type="text" id="gift-name" required placeholder="Ej. Coche de bebé" maxlength="60">
+          </label>
+          <div class="form-row">
+            <label>
+              Categoría
+              <select id="gift-category">
+                <option value="cuna">🛏️ Cuna</option>
+                <option value="panales">🧷 Pañales</option>
+                <option value="ropa">👕 Ropa</option>
+                <option value="bano">🛁 Baño</option>
+                <option value="juguete">🧸 Juguetes</option>
+                <option value="otro">🎁 Otro</option>
+              </select>
+            </label>
+            <label>
+              Cantidad necesaria
+              <input type="number" id="gift-qty" min="1" value="1">
+            </label>
+          </div>
+          <label>
+            Nota (opcional)
+            <input type="text" id="gift-note" placeholder="Ej. Color azul, talla RN" maxlength="120">
+          </label>
+          <label>
+            Link de imagen (opcional)
+            <input type="text" id="gift-image" placeholder="https://i.imgur.com/ejemplo.jpg">
+          </label>
+          <p class="field-hint">Pega el link directo de la foto (.jpg, .png). Si no tienes uno, sube la imagen gratis en <a href="https://postimages.org/es/" target="_blank" rel="noopener">postimages.org</a> → clic derecho en la foto → "Copiar dirección de imagen".</p>
+          <p class="upload-status" id="upload-status"></p>
+          <div class="image-preview-wrap" id="image-preview-wrap" hidden>
+            <p class="image-preview-label">Vista previa:</p>
+            <div class="image-preview-box" id="image-preview-box"></div>
+          </div>
+          <button type="submit" class="btn-primary">Agregar a la lista</button>
+        </form>
+      </details>
+
+      <details class="admin-block" id="admin-block-event">
+        <summary>Editar datos del evento</summary>
+        <form id="event-form">
+          <label>
+            Título
+            <input type="text" id="event-title-input" maxlength="60">
+          </label>
+          <label>
+            Mensaje
+            <input type="text" id="event-message-input" maxlength="160">
+          </label>
+          <label>
+            Fecha y hora del evento (para la cuenta regresiva)
+            <input type="datetime-local" id="event-datetime-input">
+          </label>
+          <div class="form-row">
+            <label>
+              Fecha (texto visible)
+              <input type="text" id="event-date-input" placeholder="15 de noviembre, 2026">
+            </label>
+            <label>
+              Hora (texto visible)
+              <input type="text" id="event-time-input" placeholder="4:00 PM">
+            </label>
+          </div>
+          <label>
+            Lugar (texto visible)
+            <input type="text" id="event-place-input" placeholder="Casa de la abuela">
+          </label>
+          <label>
+            Link de Google Maps (opcional)
+            <input type="text" id="event-maps-input" placeholder="https://maps.app.goo.gl/... o https://maps.google.com/...">
+          </label>
+          <button type="submit" class="btn-primary">Guardar datos</button>
+        </form>
+      </details>
+
+      <details class="admin-block" id="admin-block-list">
+        <summary>Regalos actuales</summary>
+        <div id="admin-gift-list" class="admin-gift-list"></div>
+      </details>
+
+      <p class="modal-error" id="admin-error"></p>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
