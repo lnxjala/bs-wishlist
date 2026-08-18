@@ -113,6 +113,7 @@ img {
 
 .loader-img-1 {
   animation: loader-fade-out 5s ease-in-out infinite;
+  animation-play-state: paused;
 }
 
 .loader-img-2 {
@@ -120,6 +121,12 @@ img {
   /* un poco más grande que loader-img-1 (190px) */
   height: 380px;
   animation: loader-fade-in 3s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.loader-overlay.ready .loader-img-1,
+.loader-overlay.ready .loader-img-2 {
+  animation-play-state: running;
 }
 
 .loader-paws {
@@ -1494,7 +1501,7 @@ img {
   background: var(--white);
   box-shadow: 0 4px 12px rgba(95, 108, 70, 0.16);
   cursor: pointer;
-  z-index: 60;
+  z-index: 180;
   display: flex;
   align-items: center;
   justify-content: center;

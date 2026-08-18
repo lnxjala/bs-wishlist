@@ -11,6 +11,61 @@ const loaderStart = Date.now();
 let eventLoaded = false;
 let giftsLoaded = false;
 
+// Precarga las imágenes del loader (con decodificación previa) y recién entonces arranca la animación,
+// para que la primera visita se vea igual de bien que un reload.
+(function preloadLoaderImages() {
+  const overlay = document.getElementById("loader-overlay");
+  if (!overlay) return;
+
+  const srcs = ["assets/images/family1.png", "assets/images/family2.png"];
+  
+  // Función para forzar la carga y decodificación completa de una imagen
+  const loadImage = (src) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = src;
+
+      // Si ya está en caché o completa
+      if (img.complete && img.naturalWidth !== 0) {
+        if (img.decode) {
+          img.decode().then(resolve).catch(resolve);
+        } else {
+          resolve();
+        }
+        return;
+      }
+
+      // Esperamos a que la red descargue el archivo
+      img.onload = () => {
+        if (img.decode) {
+          // decode() procesa los píxeles antes de renderizar para evitar parpadeos/pixelaos
+          img.decode().then(resolve).catch(resolve);
+        } else {
+          resolve();
+        }
+      };
+
+      // Si hay error de red, resolvemos para no bloquear la app
+      img.onerror = resolve;
+    });
+  };
+
+  // Esperar a que AMBAS imágenes estén 100% procesadas en pantalla
+  Promise.all(srcs.map(loadImage)).then(() => {
+    // Agregamos la clase .ready que activa la animación CSS exactamente cuando todo está listo
+    if (!overlay.classList.contains("ready")) {
+      overlay.classList.add("ready");
+    }
+  });
+
+  // Seguro de vida: si la red móvil está extremadamente lenta, se activa a los 4s
+  setTimeout(() => {
+    if (!overlay.classList.contains("ready")) {
+      overlay.classList.add("ready");
+    }
+  }, 4000);
+})();
+
 function hideLoaderNow() {
   document.getElementById("loader-overlay")?.classList.add("hide");
 }
@@ -222,7 +277,7 @@ function createGiftCardElement(gift) {
     note.innerHTML = "&nbsp;";
   }
   card.appendChild(note);
-  
+
   if (necesario > 1) {
     const bar = document.createElement("div");
     bar.className = "gift-progress-bar";
