@@ -23,9 +23,24 @@ function maybeHideLoader() {
 
 setTimeout(hideLoaderNow, LOADER_MAX_MS);
 
+// ---------- ICONOS (SVG en línea, sustituyen a los emojis) ----------
+const ICON = {
+  pin: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-7.58-7-12a7 7 0 0 1 14 0c0 4.42-7 12-7 12Z"/><circle cx="12" cy="9" r="2.3"/></svg>`,
+  calendar: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>`,
+  clock: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`,
+  sparkles: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.8 5.8l2.6 2.6M15.6 15.6l2.6 2.6M18.2 5.8l-2.6 2.6M8.4 15.6l-2.6 2.6"/></svg>`,
+  gift: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 12h18M12 8v13"/><path d="M12 8c-1.4-3-6-3.8-6-1.2C6 8 9 8 12 8Zm0 0c1.4-3 6-3.8 6-1.2C18 8 15 8 12 8Z"/></svg>`,
+  crib: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20V10a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10"/><path d="M2 20h20M2 14h20M6 8V5M18 8V5"/></svg>`,
+  diaper: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8"/></svg>`,
+  shirt: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3 12 6 8 3 2 7l3 3 2-1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V9l2 1 3-3-6-4Z"/></svg>`,
+  bath: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.6 6 11a6 6 0 0 1-12 0c0-4.4 6-11 6-11Z"/></svg>`,
+  toy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 2.7 5.9 6.4.6-4.9 4.3 1.5 6.4L12 15.9l-5.7 3.3 1.5-6.4L2.9 8.5l6.4-.6L12 2Z"/></svg>`,
+  paw: `<svg viewBox="0 0 100 100" fill="currentColor"><ellipse cx="50" cy="64" rx="22" ry="25"/><ellipse cx="19" cy="30" rx="11" ry="14" transform="rotate(-24 19 30)"/><ellipse cx="50" cy="16" rx="11" ry="14"/><ellipse cx="81" cy="30" rx="11" ry="14" transform="rotate(24 81 30)"/></svg>`
+};
+
 const ICONS = {
-  cuna: "🛏️", panales: "🧷", ropa: "👕",
-  bano: "🛁", juguete: "🧸", otro: "🎁"
+  cuna: ICON.crib, panales: ICON.diaper, ropa: ICON.shirt,
+  bano: ICON.bath, juguete: ICON.toy, otro: ICON.gift
 };
 
 let currentGiftId = null;
@@ -33,6 +48,10 @@ let giftsCache = [];
 let countdownTarget = null;
 let countdownInterval = null;
 let giftFilter = "disponibles";
+function getGiftsPageSize() {
+  return window.innerWidth >= 769 ? 8 : 6;
+}
+let giftsPage = 0;
 let isClaimSubmitting = false; // evita doble reserva por doble clic
 
 // ---------- HELPERS DE MODAL ----------
@@ -147,7 +166,7 @@ function loadImageWithFallback(img, wrap, url, icon) {
       wrap.replaceChildren();
       const span = document.createElement("span");
       span.className = "gift-image-placeholder";
-      span.textContent = icon;
+      span.innerHTML = icon;
       wrap.appendChild(span);
       return;
     }
@@ -160,7 +179,7 @@ function loadImageWithFallback(img, wrap, url, icon) {
 function createGiftImageElement(gift) {
   const wrap = document.createElement("div");
   wrap.className = "gift-image-wrap";
-  const icon = ICONS[gift.categoria] || "🎁";
+  const icon = ICONS[gift.categoria] || ICON.gift;
   const url = getGiftImageUrl(gift);
 
   if (isValidImageUrl(url)) {
@@ -173,7 +192,7 @@ function createGiftImageElement(gift) {
   } else {
     const span = document.createElement("span");
     span.className = "gift-image-placeholder";
-    span.textContent = icon;
+    span.innerHTML = icon;
     wrap.appendChild(span);
   }
   return wrap;
@@ -194,13 +213,16 @@ function createGiftCardElement(gift) {
   name.textContent = gift.nombre || "";
   card.appendChild(name);
 
+  const note = document.createElement("p");
+  note.className = "gift-note";
   if (gift.nota) {
-    const note = document.createElement("p");
-    note.className = "gift-note";
     note.textContent = gift.nota;
-    card.appendChild(note);
+  } else {
+    note.classList.add("gift-note--empty");
+    note.innerHTML = "&nbsp;";
   }
-
+  card.appendChild(note);
+  
   if (necesario > 1) {
     const bar = document.createElement("div");
     bar.className = "gift-progress-bar";
@@ -288,8 +310,23 @@ document.getElementById("gifts-filters").addEventListener("click", e => {
   const btn = e.target.closest(".filter-btn");
   if (!btn) return;
   giftFilter = btn.dataset.filter;
+  giftsPage = 0;
   document.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", b === btn));
   renderGifts(giftsCache);
+});
+
+// ---------- PAGINACIÓN DE REGALOS ----------
+document.getElementById("gifts-prev").addEventListener("click", () => {
+  if (giftsPage <= 0) return;
+  giftsPage -= 1;
+  renderGifts(giftsCache);
+  document.getElementById("regalos-section").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+document.getElementById("gifts-next").addEventListener("click", () => {
+  giftsPage += 1;
+  renderGifts(giftsCache);
+  document.getElementById("regalos-section").scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
 // ---------- MÚSICA ----------
@@ -431,11 +468,12 @@ db.collection("event").doc("info").onSnapshot(doc => {
       data.mensaje || "Un pequeño dinosaurio está en camino";
 
     const facts = [];
-    if (data.fecha) facts.push(`📅 ${data.fecha}`);
-    if (data.hora) facts.push(`🕓 ${data.hora}`);
-    if (data.lugar) facts.push(`📍 ${data.lugar}`);
-    document.getElementById("event-facts").innerHTML =
-      facts.map(f => `<span class="event-fact">${escapeHtml(f)}</span>`).join("");
+    if (data.fecha) facts.push([ICON.calendar, data.fecha]);
+    if (data.hora) facts.push([ICON.clock, data.hora]);
+    if (data.lugar) facts.push([ICON.pin, data.lugar]);
+    document.getElementById("event-facts").innerHTML = facts
+      .map(([icon, text]) => `<span class="event-fact">${icon}<span>${escapeHtml(text)}</span></span>`)
+      .join("");
 
     const mapsUrl = normalizeMapsUrl(data.mapsUrl || "");
     const mapsWrap = document.getElementById("event-maps");
@@ -485,14 +523,24 @@ db.collection("gifts").where("activo", "!=", false)
       `<p class="empty-text">No se pudo conectar a la base de datos. Revisa firebase-config.js.</p>`;
     console.error(err);
   });
+let giftsResizeTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(giftsResizeTimer);
+  giftsResizeTimer = setTimeout(() => renderGifts(giftsCache), 200);
+});
 
 function renderGifts(gifts) {
   const grid = document.getElementById("gifts-grid");
   const filtersEl = document.getElementById("gifts-filters");
+  const paginationEl = document.getElementById("gifts-pagination");
+  const prevBtn = document.getElementById("gifts-prev");
+  const nextBtn = document.getElementById("gifts-next");
+  const indicator = document.getElementById("gifts-page-indicator");
 
   if (!gifts.length) {
     grid.innerHTML = `<p class="empty-text">Aún no hay regalos en la lista. ¡El organizador puede agregar los primeros!</p>`;
     filtersEl.hidden = true;
+    paginationEl.hidden = true;
     return;
   }
 
@@ -503,20 +551,38 @@ function renderGifts(gifts) {
 
   if (!filtered.length) {
     const msg = giftFilter === "disponibles"
-      ? "¡Todos los regalos ya están completos! 🎉"
+      ? `${ICON.sparkles} ¡Todos los regalos ya están completos!`
       : giftFilter === "completados"
         ? "Aún no hay regalos completados."
         : "No hay regalos para mostrar.";
     grid.innerHTML = `<p class="empty-text">${msg}</p>`;
+    paginationEl.hidden = true;
     return;
   }
 
+  const pageSize = getGiftsPageSize();
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  if (giftsPage >= totalPages) giftsPage = totalPages - 1;
+  if (giftsPage < 0) giftsPage = 0;
+
+  const start = giftsPage * pageSize;
+  const visible = filtered.slice(start, start + pageSize);
+
   grid.replaceChildren();
-  filtered.forEach(gift => grid.appendChild(createGiftCardElement(gift)));
+  visible.forEach(gift => grid.appendChild(createGiftCardElement(gift)));
 
   grid.querySelectorAll("[data-claim]").forEach(btn => {
     btn.addEventListener("click", () => openClaimModal(btn.dataset.claim));
   });
+
+  if (totalPages > 1) {
+    paginationEl.hidden = false;
+    indicator.textContent = `Página ${giftsPage + 1} de ${totalPages}`;
+    prevBtn.disabled = giftsPage === 0;
+    nextBtn.disabled = giftsPage >= totalPages - 1;
+  } else {
+    paginationEl.hidden = true;
+  }
 }
 
 function renderGrowth(gifts) {
@@ -589,7 +655,7 @@ document.getElementById("claim-form").addEventListener("submit", async e => {
       const cantidadFinal = necesario > 1 ? cantidad : 1;
 
       if (reservadoActual + cantidadFinal > necesario) {
-        throw new Error("Ese regalo ya no tiene cupo disponible. Otra persona se te adelantó, elige otro 💚");
+        throw new Error("Ese regalo ya no tiene cupo disponible. Otra persona se te adelantó, elige otro regalo.");
       }
 
       tx.update(giftRef, { reservado: reservadoActual + cantidadFinal });
@@ -761,11 +827,11 @@ async function renderAdminList(gifts) {
       const thumbImg = document.createElement("img");
       thumbImg.referrerPolicy = "no-referrer";
       thumbImg.alt = "";
-      loadImageWithFallback(thumbImg, thumbWrap, thumbUrl, ICONS[gift.categoria] || "🎁");
+      loadImageWithFallback(thumbImg, thumbWrap, thumbUrl, ICONS[gift.categoria] || ICON.gift);
       thumbWrap.appendChild(thumbImg);
     } else {
       thumbWrap.classList.add("admin-gift-thumb--empty");
-      thumbWrap.textContent = ICONS[gift.categoria] || "🎁";
+      thumbWrap.innerHTML = ICONS[gift.categoria] || ICON.gift;
     }
 
     info.appendChild(thumbWrap);
