@@ -513,8 +513,10 @@ function toDatetimeLocalValue(date) {
 }
 
 // ---------- EVENTO (datos generales) ----------
+// ---------- EVENTO (datos generales) ----------
 db.collection("event").doc("info").onSnapshot(doc => {
-  eventLoaded = true; maybeHideLoader();
+  eventLoaded = true; 
+  maybeHideLoader();
   const data = doc.exists ? doc.data() : {};
 
   try {
@@ -526,28 +528,58 @@ db.collection("event").doc("info").onSnapshot(doc => {
     if (data.fecha) facts.push([ICON.calendar, data.fecha]);
     if (data.hora) facts.push([ICON.clock, data.hora]);
     if (data.lugar) facts.push([ICON.pin, data.lugar]);
-    document.getElementById("event-facts").innerHTML = facts
-      .map(([icon, text]) => `<span class="event-fact">${icon}<span>${escapeHtml(text)}</span></span>`)
-      .join("");
+    
+    const factsEl = document.getElementById("event-facts");
+    if (factsEl) {
+      factsEl.innerHTML = facts
+        .map(([icon, text]) => `<span class="event-fact">${icon}<span>${escapeHtml(text)}</span></span>`)
+        .join("");
+    }
 
-    const mapsUrl = normalizeMapsUrl(data.mapsUrl || "");
+    // 1. Obtener enlace de Firestore
+    let mapsUrl = normalizeMapsUrl(data.mapsUrl || "");
+
     const mapsWrap = document.getElementById("event-maps");
     const mapsLink = document.getElementById("event-maps-link");
 
-    if (mapsUrl && isValidMapsUrl(mapsUrl)) {
-      mapsWrap.hidden = false;
-      mapsLink.href = mapsUrl;
+    if (mapsUrl) {
+      if (mapsWrap) mapsWrap.hidden = false;
+      if (mapsLink) mapsLink.href = mapsUrl;
     } else {
-      mapsWrap.hidden = true;
-      mapsLink.href = "#";
+      if (mapsWrap) mapsWrap.hidden = true;
+      if (mapsLink) mapsLink.href = "#";
     }
 
+    // 2. CONFIGURAR BOTÓN DE UBICACIÓN DIRECTO
+    const heroBtn = document.getElementById("hero-location-btn");
+    const heroText = document.getElementById("hero-location-text");
+
+    if (heroText) {
+      heroText.textContent = data.lugar || "Guarda la fecha y el lugar";
+    }
+
+    if (heroBtn) {
+      if (mapsUrl) {
+        // Asignamos la URL directamente al HTML y dejamos que el navegador maneje el clic
+        heroBtn.setAttribute("href", mapsUrl);
+        heroBtn.setAttribute("target", "_blank");
+        heroBtn.setAttribute("rel", "noopener noreferrer");
+        heroBtn.onclick = null; // Eliminamos cualquier manejador JS que intercepte el clic
+      } else {
+        heroBtn.setAttribute("href", "#detalles");
+        heroBtn.removeAttribute("target");
+        heroBtn.onclick = null;
+      }
+    }
+
+    // Campos del admin
     document.getElementById("event-title-input").value = data.titulo || "";
     document.getElementById("event-message-input").value = data.mensaje || "";
     document.getElementById("event-date-input").value = data.fecha || "";
     document.getElementById("event-time-input").value = data.hora || "";
     document.getElementById("event-place-input").value = data.lugar || "";
     document.getElementById("event-maps-input").value = data.mapsUrl || "";
+
   } catch (err) {
     console.error("Error actualizando datos del evento:", err);
   }
@@ -557,7 +589,8 @@ db.collection("event").doc("info").onSnapshot(doc => {
   if (datetimeInput) datetimeInput.value = toDatetimeLocalValue(eventDate);
   startCountdown(eventDate);
 }, err => {
-  eventLoaded = true; maybeHideLoader();
+  eventLoaded = true; 
+  maybeHideLoader();
   console.error("Error leyendo evento:", err);
 });
 
