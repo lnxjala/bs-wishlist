@@ -1,8 +1,4 @@
-/* =============================================================
-   TOKENS
-   ============================================================= */
 :root {
-  /* Color */
   --cream: #f6f3ea;
   --cream-soft: #efebdd;
   --sage: #a9b98d;
@@ -16,12 +12,10 @@
   --ink-soft: #6d735a;
   --line: #dcd6c2;
 
-  /* Type */
   --font-display: 'Fredoka', sans-serif;
   --font-script: 'Caveat', cursive;
   --font-body: 'Nunito', sans-serif;
 
-  /* Layout */
   --radius-lg: 24px;
   --radius-md: 16px;
   --radius-sm: 10px;
@@ -52,9 +46,6 @@ img {
   max-width: 100%;
 }
 
-/* =============================================================
-   HUELLITAS DECORATIVAS (paw prints, sin depender de un archivo)
-   ============================================================= */
 .paw {
   position: absolute;
   width: 36px;
@@ -70,9 +61,6 @@ img {
   pointer-events: none;
 }
 
-/* =============================================================
-   PRECARGA: transición family1 -> family2
-   ============================================================= */
 .loader-overlay {
   position: fixed;
   inset: 0;
@@ -118,7 +106,6 @@ img {
 
 .loader-img-2 {
   width: 380px;
-  /* un poco más grande que loader-img-1 (190px) */
   height: 380px;
   animation: loader-fade-in 3s ease-in-out infinite;
   animation-play-state: paused;
@@ -237,9 +224,6 @@ img {
   font-weight: 500;
 }
 
-/* =============================================================
-   NAV
-   ============================================================= */
 .site-nav {
   position: fixed;
   top: 0;
@@ -299,9 +283,6 @@ img {
   }
 }
 
-/* =============================================================
-   DIVISOR SIMPLE (línea punteada entre secciones)
-   ============================================================= */
 .section-divider {
   max-width: 620px;
   margin: 40px auto 0;
@@ -309,9 +290,6 @@ img {
   border-top: 2px dashed var(--line);
 }
 
-/* =============================================================
-   HERO
-   ============================================================= */
 .hero {
   position: relative;
   padding: calc(var(--nav-height) + 48px) 24px 64px;
@@ -362,7 +340,6 @@ img {
 .hero-dino-left {
   left: 60px;
   transform: scaleX(-1);
-  /* dinoblue.png mira a la izquierda por defecto; lo volteamos para que mire hacia el centro */
 }
 
 .hero-dino-right {
@@ -442,9 +419,6 @@ img {
   }
 }
 
-/* =============================================================
-   DETALLES
-   ============================================================= */
 .details-section {
   padding: 0 20px;
   margin-top: -34px;
@@ -527,9 +501,6 @@ img {
   display: none;
 }
 
-/* =============================================================
-   COUNTDOWN
-   ============================================================= */
 .countdown-section {
   position: relative;
   max-width: 620px;
@@ -701,9 +672,6 @@ img {
   }
 }
 
-/* =============================================================
-   CONFIRMAR / TE ESPERAMOS
-   ============================================================= */
 .confirm-section {
   position: relative;
   max-width: 720px;
@@ -843,9 +811,6 @@ img {
   }
 }
 
-/* =============================================================
-   GROWTH VINE
-   ============================================================= */
 .growth-wrap {
   position: relative;
   max-width: 680px;
@@ -876,9 +841,6 @@ img {
   transition: x2 0.6s ease;
 }
 
-/* =============================================================
-   REGALOS
-   ============================================================= */
 .gifts-section {
   position: relative;
   max-width: 960px;
@@ -1129,9 +1091,6 @@ img {
   color: #a55;
 }
 
-/* =============================================================
-   PAGINACIÓN DE REGALOS
-   ============================================================= */
 .gifts-pagination {
   display: flex;
   align-items: center;
@@ -1185,9 +1144,6 @@ img {
   }
 }
 
-/* =============================================================
-   FOOTER
-   ============================================================= */
 .site-footer {
   position: relative;
   text-align: center;
@@ -1224,9 +1180,6 @@ img {
   opacity: 1;
 }
 
-/* =============================================================
-   MODALS
-   ============================================================= */
 .modal-backdrop {
   display: none;
   position: fixed;
@@ -1487,9 +1440,6 @@ img {
   gap: 2px;
 }
 
-/* =============================================================
-   REPRODUCTOR DE MÚSICA
-   ============================================================= */
 .music-toggle {
   position: fixed;
   bottom: calc(16px + env(safe-area-inset-bottom));
@@ -1538,9 +1488,6 @@ img {
   display: block;
 }
 
-/* =============================================================
-   RESPONSIVE
-   ============================================================= */
 @media (max-width: 768px) {
   .gifts-grid {
     grid-template-columns: repeat(2, 1fr);

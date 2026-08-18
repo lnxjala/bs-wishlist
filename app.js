@@ -1,31 +1,23 @@
-// ---------- INICIALIZAR FIREBASE ----------
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// El loader tiene una animación CSS de 5.2s que muestra family1 -> family2.
-// LOADER_MIN_MS se ajusta para que alcance a verse esa transición completa
-// al menos una vez, sin importar qué tan rápido responda Firebase.
 const LOADER_MIN_MS = 3000;
-const LOADER_MAX_MS = 6000; // seguro: si algo tarda o falla, igual se revela la página
+const LOADER_MAX_MS = 6000;
 const loaderStart = Date.now();
 let eventLoaded = false;
 let giftsLoaded = false;
 
-// Precarga las imágenes del loader (con decodificación previa) y recién entonces arranca la animación,
-// para que la primera visita se vea igual de bien que un reload.
 (function preloadLoaderImages() {
   const overlay = document.getElementById("loader-overlay");
   if (!overlay) return;
 
   const srcs = ["assets/images/family1.png", "assets/images/family2.png"];
-  
-  // Función para forzar la carga y decodificación completa de una imagen
+
   const loadImage = (src) => {
     return new Promise((resolve) => {
       const img = new Image();
       img.src = src;
 
-      // Si ya está en caché o completa
       if (img.complete && img.naturalWidth !== 0) {
         if (img.decode) {
           img.decode().then(resolve).catch(resolve);
@@ -35,30 +27,24 @@ let giftsLoaded = false;
         return;
       }
 
-      // Esperamos a que la red descargue el archivo
       img.onload = () => {
         if (img.decode) {
-          // decode() procesa los píxeles antes de renderizar para evitar parpadeos/pixelaos
           img.decode().then(resolve).catch(resolve);
         } else {
           resolve();
         }
       };
 
-      // Si hay error de red, resolvemos para no bloquear la app
       img.onerror = resolve;
     });
   };
 
-  // Esperar a que AMBAS imágenes estén 100% procesadas en pantalla
   Promise.all(srcs.map(loadImage)).then(() => {
-    // Agregamos la clase .ready que activa la animación CSS exactamente cuando todo está listo
     if (!overlay.classList.contains("ready")) {
       overlay.classList.add("ready");
     }
   });
 
-  // Seguro de vida: si la red móvil está extremadamente lenta, se activa a los 4s
   setTimeout(() => {
     if (!overlay.classList.contains("ready")) {
       overlay.classList.add("ready");
@@ -78,7 +64,6 @@ function maybeHideLoader() {
 
 setTimeout(hideLoaderNow, LOADER_MAX_MS);
 
-// ---------- ICONOS (SVG en línea, sustituyen a los emojis) ----------
 const ICON = {
   pin: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-7.58-7-12a7 7 0 0 1 14 0c0 4.42-7 12-7 12Z"/><circle cx="12" cy="9" r="2.3"/></svg>`,
   calendar: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>`,
@@ -107,9 +92,8 @@ function getGiftsPageSize() {
   return window.innerWidth >= 769 ? 8 : 6;
 }
 let giftsPage = 0;
-let isClaimSubmitting = false; // evita doble reserva por doble clic
+let isClaimSubmitting = false;
 
-// ---------- HELPERS DE MODAL ----------
 function openModal(id) { document.getElementById(id).classList.add("open"); }
 function closeModal(id) { document.getElementById(id).classList.remove("open"); }
 
@@ -120,7 +104,6 @@ document.querySelectorAll(".modal-backdrop").forEach(bd => {
   bd.addEventListener("click", e => { if (e.target === bd) bd.classList.remove("open"); });
 });
 
-// ---------- UTIL ----------
 function escapeHtml(str) {
   const div = document.createElement("div");
   div.textContent = str ?? "";
@@ -346,7 +329,6 @@ function updateImagePreview() {
 
 document.getElementById("gift-image").addEventListener("input", updateImagePreview);
 
-// ---------- PANEL ADMIN: acordeón (solo una sección abierta) ----------
 function initAdminAccordion() {
   const blocks = document.querySelectorAll("#admin-modal .admin-block");
   blocks.forEach(block => {
@@ -360,7 +342,6 @@ function initAdminAccordion() {
 }
 initAdminAccordion();
 
-// ---------- FILTROS DE REGALOS ----------
 document.getElementById("gifts-filters").addEventListener("click", e => {
   const btn = e.target.closest(".filter-btn");
   if (!btn) return;
@@ -370,7 +351,6 @@ document.getElementById("gifts-filters").addEventListener("click", e => {
   renderGifts(giftsCache);
 });
 
-// ---------- PAGINACIÓN DE REGALOS ----------
 document.getElementById("gifts-prev").addEventListener("click", () => {
   if (giftsPage <= 0) return;
   giftsPage -= 1;
@@ -384,7 +364,6 @@ document.getElementById("gifts-next").addEventListener("click", () => {
   document.getElementById("regalos-section").scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
-// ---------- MÚSICA ----------
 function initMusic() {
   const audio = document.getElementById("bg-music");
   const toggle = document.getElementById("music-toggle");
@@ -406,7 +385,6 @@ function initMusic() {
         pauseIcon.hidden = false;
         toggle.setAttribute("aria-label", "Pausar música");
       } catch {
-        /* el navegador bloqueó autoplay */
       }
     } else {
       audio.pause();
@@ -419,7 +397,6 @@ function initMusic() {
 }
 initMusic();
 
-// ---------- COUNTDOWN ----------
 function pad(n) { return String(n).padStart(2, "0"); }
 
 function startCountdown(targetDate) {
@@ -512,8 +489,6 @@ function toDatetimeLocalValue(date) {
   return `${date.getFullYear()}-${pad2(date.getMonth() + 1)}-${pad2(date.getDate())}T${pad2(date.getHours())}:${pad2(date.getMinutes())}`;
 }
 
-// ---------- EVENTO (datos generales) ----------
-// ---------- EVENTO (datos generales) ----------
 db.collection("event").doc("info").onSnapshot(doc => {
   eventLoaded = true; 
   maybeHideLoader();
@@ -536,7 +511,6 @@ db.collection("event").doc("info").onSnapshot(doc => {
         .join("");
     }
 
-    // 1. Obtener enlace de Firestore
     let mapsUrl = normalizeMapsUrl(data.mapsUrl || "");
 
     const mapsWrap = document.getElementById("event-maps");
@@ -550,7 +524,6 @@ db.collection("event").doc("info").onSnapshot(doc => {
       if (mapsLink) mapsLink.href = "#";
     }
 
-    // 2. CONFIGURAR BOTÓN DE UBICACIÓN DIRECTO
     const heroBtn = document.getElementById("hero-location-btn");
     const heroText = document.getElementById("hero-location-text");
 
@@ -560,11 +533,10 @@ db.collection("event").doc("info").onSnapshot(doc => {
 
     if (heroBtn) {
       if (mapsUrl) {
-        // Asignamos la URL directamente al HTML y dejamos que el navegador maneje el clic
         heroBtn.setAttribute("href", mapsUrl);
         heroBtn.setAttribute("target", "_blank");
         heroBtn.setAttribute("rel", "noopener noreferrer");
-        heroBtn.onclick = null; // Eliminamos cualquier manejador JS que intercepte el clic
+        heroBtn.onclick = null;
       } else {
         heroBtn.setAttribute("href", "#detalles");
         heroBtn.removeAttribute("target");
@@ -572,7 +544,6 @@ db.collection("event").doc("info").onSnapshot(doc => {
       }
     }
 
-    // Campos del admin
     document.getElementById("event-title-input").value = data.titulo || "";
     document.getElementById("event-message-input").value = data.mensaje || "";
     document.getElementById("event-date-input").value = data.fecha || "";
@@ -594,7 +565,6 @@ db.collection("event").doc("info").onSnapshot(doc => {
   console.error("Error leyendo evento:", err);
 });
 
-// ---------- REGALOS (tiempo real) ----------
 db.collection("gifts").where("activo", "!=", false)
   .onSnapshot(snap => {
     giftsLoaded = true; maybeHideLoader();
@@ -683,7 +653,6 @@ function renderGrowth(gifts) {
   document.getElementById("growth-fill").setAttribute("x2", x2.toFixed(1));
 }
 
-// ---------- RESERVAR REGALO ----------
 function openClaimModal(giftId) {
   if (isClaimSubmitting) return;
   const gift = giftsCache.find(g => g.id === giftId);
@@ -767,7 +736,6 @@ document.getElementById("claim-form").addEventListener("submit", async e => {
   }
 });
 
-// ---------- ADMIN: PIN ----------
 document.getElementById("admin-toggle").addEventListener("click", () => {
   document.getElementById("pin-input").value = "";
   document.getElementById("pin-error").textContent = "";
@@ -786,7 +754,6 @@ document.getElementById("pin-form").addEventListener("submit", e => {
   }
 });
 
-// ---------- ADMIN: AGREGAR REGALO ----------
 document.getElementById("gift-form").addEventListener("submit", async e => {
   e.preventDefault();
   const nombre = document.getElementById("gift-name").value.trim();
@@ -845,7 +812,6 @@ document.getElementById("gift-form").addEventListener("submit", async e => {
   }
 });
 
-// ---------- ADMIN: EDITAR EVENTO ----------
 document.getElementById("event-form").addEventListener("submit", async e => {
   e.preventDefault();
   const errorEl = document.getElementById("admin-error");
@@ -878,7 +844,6 @@ document.getElementById("event-form").addEventListener("submit", async e => {
   }
 });
 
-// ---------- ADMIN: LISTA CON NOMBRES ----------
 async function renderAdminList(gifts) {
   const el = document.getElementById("admin-gift-list");
   if (!gifts.length) {
