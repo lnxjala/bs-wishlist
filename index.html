@@ -16,7 +16,6 @@
 </head>
 
 <body>
-
   <div class="loader-overlay" id="loader-overlay">
     <div class="loader-stage">
       <img class="loader-img loader-img-1" src="assets/images/family1.png" alt="">
@@ -32,14 +31,53 @@
   </div>
 
   <nav class="site-nav">
-    <div class="nav-inner">
-      <a class="nav-brand" href="#top">
-        <img src="assets/images/eggdinobaby.png" alt="" class="nav-brand-img">
+    <div class="nav-inner nav-links">
+      <a class="nav-brand" href="#top" style="font-size: 10px;">
+        <img style="transform: scaleX(-1);" src="assets/images/eggdinobaby.png" alt="" class="nav-brand-img">
+         Inicio
       </a>
+
+      <button class="music-toggle" id="music-toggle" aria-label="Reproducir música" title="Música de fondo" hidden>
+
+        <!-- Texto curvado -->
+        <svg class="music-toggle-label" viewBox="0 0 100 100" aria-hidden="true">
+          <defs>
+            <path id="music-curve" d="M 18,55 A 32,32 0 0,1 82,55" fill="none" />
+          </defs>
+
+          <text style="padding-top:5px">
+            <textPath href="#music-curve" startOffset="50%" text-anchor="middle">
+              DALE PLAY
+            </textPath>
+          </text>
+        </svg>
+
+        <!-- TU PLAY ACTUAL -->
+        <span class="music-icon music-icon-play">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M9 18V5l12-2v13" />
+            <circle cx="6" cy="18" r="3" />
+            <circle cx="18" cy="16" r="3" />
+          </svg>
+        </span>
+
+        <!-- TU PAUSE ACTUAL -->
+        <span class="music-icon music-icon-pause" hidden>
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <rect x="6" y="4" width="4" height="16" rx="1" />
+            <rect x="14" y="4" width="4" height="16" rx="1" />
+          </svg>
+        </span>
+
+      </button>
+      <audio id="bg-music" loop preload="metadata"></audio>
+
       <div class="nav-links">
-        <a href="#top">Inicio</a>
-        <a href="#regalos-section">Regalos</a>
-        <a href="#confirmar">Confirmar</a>
+        <a href="#regalos-section" style="font-size: 10px;">
+          <img src="assets/images/dinoregalo.png" alt="" class="nav-brand-img">
+          Regalos
+        </a>
       </div>
     </div>
   </nav>
@@ -56,10 +94,11 @@
     <div class="hero-inner">
       <p class="eyebrow">Te invito a mi</p>
       <h1 class="hero-title">
-        Baby<br>
-        <span class="hero-script">Shower</span>
+        Baby Shower<br>
+        <span class="hero-script" id="event-title"></span>
       </h1>
-      <p class="hero-tag" id="event-title">Dino Baby</p>
+      <!-- <p class="hero-tag" id="event-title">Dino Baby</p> -->
+      <p class="hero-message-title">¡La cuenta regresiva comenzó! </p>
       <p class="hero-message" id="event-message">Cargando los detalles del evento…</p>
     </div>
   </header>
@@ -111,273 +150,224 @@
     </div>
   </section>
 
-    <section class="confirm-section" id="confirmar">
-      <span class="paw paw-8" aria-hidden="true"></span>
-      <img class="confirm-dino confirm-dino-left" src="assets/images/dinoblue2.png" alt="">
-      <div class="confirm-inner">
-        <p class="confirm-title"><svg viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 21s-7.5-4.87-10-9.5C.3 7.6 2.6 4 6.3 4c2 0 3.6 1.1 4.7 2.7C12.1 5.1 13.7 4 15.7 4c3.7 0 6 3.6 4.3 7.5C19.5 16.13 12 21 12 21Z" />
-          </svg>¡Te esperamos!</p>
-        <p class="confirm-text">Tu compañía hará de este día un recuerdo inolvidable para nosotros. Prepárate para
-          juegos, risas y mucha diversión.</p>
-        <div class="confirm-actions">
-          <a href="https://wa.me/51987194680?text=%C2%A1Hola!%20Gracias%20por%20la%20invitaci%C3%B3n.%20Quiero%20confirmar%20mi%20asistencia%20para%20acompa%C3%B1arte%20en%20ese%20d%C3%ADa%20tan%20especial.%20%C2%A1Nos%20vemos%20pronto!"
-            target="_blank" rel="noopener" class="confirm-btn confirm-btn-whatsapp">
-            <span class="confirm-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 6 9 17l-5-5" />
-              </svg></span>
-            <span>
-              <strong>Confirmar asistencia</strong>
-              <small>Escríbenos por WhatsApp</small>
-            </span>
-          </a>
+  <section class="confirm-section" id="confirmar">
+    <span class="paw paw-8" aria-hidden="true"></span>
+    <img class="confirm-dino confirm-dino-left" src="assets/images/dinoblue2.png" alt="">
+    <div class="confirm-inner">
+      <p class="confirm-title"><svg viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 21s-7.5-4.87-10-9.5C.3 7.6 2.6 4 6.3 4c2 0 3.6 1.1 4.7 2.7C12.1 5.1 13.7 4 15.7 4c3.7 0 6 3.6 4.3 7.5C19.5 16.13 12 21 12 21Z" />
+        </svg>¡Te esperamos!</p>
+      <p class="confirm-text">Tu presencia es nuestro mejor regalo,
+        pero si deseas hacernos un detalle,
+        te compartimos esta pequeña lista
+        que preparamos con mucho amor.
+      </p>
+    </div>
+    </div>
+  </section>
 
-          <a href="#" id="hero-location-btn" class="confirm-btn" target="_blank" rel="noopener">
-            <span class="confirm-btn-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                stroke-linejoin="round">
-                <path d="M12 21s-7-7.58-7-12a7 7 0 0 1 14 0c0 4.42-7 12-7 12Z" />
-                <circle cx="12" cy="9" r="2.3" />
-              </svg>
-            </span>
-            <span>
-              <strong>Ver ubicación</strong>
-              <small id="hero-location-text">Guarda la fecha y el lugar</small>
-            </span>
-          </a>
+  <div class="section-divider" aria-hidden="true"></div>
 
-          <a href="#regalos-section" class="confirm-btn">
-            <span class="confirm-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-                stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="8" width="18" height="13" rx="2" />
-                <path d="M3 12h18M12 8v13" />
-                <path d="M12 8c-1.4-3-6-3.8-6-1.2C6 8 9 8 12 8Zm0 0c1.4-3 6-3.8 6-1.2C18 8 15 8 12 8Z" />
-              </svg></span>
-            <span>
-              <strong>Regalos</strong>
-              <small>Ver sugerencias de regalo</small>
-            </span>
-          </a>
-        </div>
+
+
+  <main class="gifts-section" id="regalos-section">
+    <span class="paw paw-9" aria-hidden="true"></span>
+    <span class="paw paw-10" aria-hidden="true"></span>
+    <h2 style="padding-bottom: 10px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+        stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="8" width="18" height="13" rx="2" />
+        <path d="M3 12h18M12 8v13" />
+        <path d="M12 8c-1.4-3-6-3.8-6-1.2C6 8 9 8 12 8Zm0 0c1.4-3 6-3.8 6-1.2C18 8 15 8 12 8Z" />
+      </svg>Algunas ideas de regalitos para baby FARAMIR</h2>
+    <div class="gifts-filters" id="gifts-filters" hidden>
+      <button class="filter-btn active" data-filter="disponibles" data-label="Disponibles">Disponibles</button>
+      <button class="filter-btn" data-filter="completados" data-label="Completados">Completados</button>
+      <button class="filter-btn" data-filter="todos" data-label="Todos">Todos</button>
+    </div>
+    <div class="gifts-grid" id="gifts-grid">
+      <p class="loading-text">Cargando regalos…</p>
+    </div>
+    <div class="gifts-pagination" id="gifts-pagination" hidden>
+      <button class="btn-page" id="gifts-prev" aria-label="Regalos anteriores">← Atrás</button>
+      <span class="gifts-page-indicator" id="gifts-page-indicator">Página 1 de 1</span>
+      <button class="btn-page" id="gifts-next" aria-label="Siguientes regalos">Siguiente →</button>
+    </div>
+    <section class="growth-wrap">
+      <span class="paw paw-11" aria-hidden="true"></span>
+      <div class="growth-label">
+        <span id="growth-count">0 de 0</span> regalos completos
       </div>
+      <svg class="growth-vine" viewBox="0 0 640 60" preserveAspectRatio="none" aria-hidden="true">
+        <line x1="10" y1="45" x2="630" y2="45" stroke="var(--line)" stroke-width="2" stroke-dasharray="1 8"
+          stroke-linecap="round" />
+        <line id="growth-fill" x1="10" y1="45" x2="10" y2="45" stroke="var(--olive)" stroke-width="3"
+          stroke-linecap="round" />
+      </svg>
     </section>
-
-    <div class="section-divider" aria-hidden="true"></div>
-
+  </main>
 
 
-    <main class="gifts-section" id="regalos-section">
-      <span class="paw paw-9" aria-hidden="true"></span>
-      <span class="paw paw-10" aria-hidden="true"></span>
-      <h2 style="padding-bottom: 10px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-          stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="8" width="18" height="13" rx="2" />
-          <path d="M3 12h18M12 8v13" />
-          <path d="M12 8c-1.4-3-6-3.8-6-1.2C6 8 9 8 12 8Zm0 0c1.4-3 6-3.8 6-1.2C18 8 15 8 12 8Z" />
-        </svg>Regalitos</h2>
-      <div class="gifts-filters" id="gifts-filters" hidden>
-        <button class="filter-btn active" data-filter="disponibles" data-label="Disponibles">Disponibles</button>
-        <button class="filter-btn" data-filter="completados" data-label="Completados">Completados</button>
-        <button class="filter-btn" data-filter="todos" data-label="Todos">Todos</button>
-      </div>
-      <div class="gifts-grid" id="gifts-grid">
-        <p class="loading-text">Cargando regalos…</p>
-      </div>
-      <div class="gifts-pagination" id="gifts-pagination" hidden>
-        <button class="btn-page" id="gifts-prev" aria-label="Regalos anteriores">← Atrás</button>
-        <span class="gifts-page-indicator" id="gifts-page-indicator">Página 1 de 1</span>
-        <button class="btn-page" id="gifts-next" aria-label="Siguientes regalos">Siguiente →</button>
-      </div>
-      <section class="growth-wrap">
-        <span class="paw paw-11" aria-hidden="true"></span>
-        <div class="growth-label">
-          <span id="growth-count">0 de 0</span> regalos completos
-        </div>
-        <svg class="growth-vine" viewBox="0 0 640 60" preserveAspectRatio="none" aria-hidden="true">
-          <line x1="10" y1="45" x2="630" y2="45" stroke="var(--line)" stroke-width="2" stroke-dasharray="1 8"
-            stroke-linecap="round" />
-          <line id="growth-fill" x1="10" y1="45" x2="10" y2="45" stroke="var(--olive)" stroke-width="3"
-            stroke-linecap="round" />
-        </svg>
-      </section>
-    </main>
+  <footer class="site-footer">
+    <span class="paw paw-12" aria-hidden="true"></span>
+    <p class="footer-thanks"><svg viewBox="0 0 100 100" fill="currentColor">
+        <ellipse cx="50" cy="64" rx="22" ry="25" />
+        <ellipse cx="19" cy="30" rx="11" ry="14" transform="rotate(-24 19 30)" />
+        <ellipse cx="50" cy="16" rx="11" ry="14" />
+        <ellipse cx="81" cy="30" rx="11" ry="14" transform="rotate(24 81 30)" />
+      </svg>Gracias por ser parte de esta aventura<svg viewBox="0 0 100 100" fill="currentColor">
+        <ellipse cx="50" cy="64" rx="22" ry="25" />
+        <ellipse cx="19" cy="30" rx="11" ry="14" transform="rotate(-24 19 30)" />
+        <ellipse cx="50" cy="16" rx="11" ry="14" />
+        <ellipse cx="81" cy="30" rx="11" ry="14" transform="rotate(24 81 30)" />
+      </svg></p>
+    <button class="admin-link" id="admin-toggle">¿Eres el organizador?</button>
+  </footer>
 
-    <button class="music-toggle" id="music-toggle" aria-label="Reproducir música" title="Música de fondo" hidden>
-      <span class="music-icon music-icon-play"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 18V5l12-2v13" />
-          <circle cx="6" cy="18" r="3" />
-          <circle cx="18" cy="16" r="3" />
-        </svg></span>
-      <span class="music-icon music-icon-pause" hidden><svg viewBox="0 0 24 24" fill="currentColor">
-          <rect x="6" y="4" width="4" height="16" rx="1" />
-          <rect x="14" y="4" width="4" height="16" rx="1" />
-        </svg></span>
-    </button>
-    <audio id="bg-music" loop preload="metadata"></audio>
+  <div class="modal-backdrop" id="claim-modal">
+    <div class="modal">
+      <button class="modal-close" data-close="claim-modal" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg></button>
+      <h3 id="claim-modal-title">Reservar regalo</h3>
+      <p class="modal-sub" id="claim-modal-sub"></p>
+      <form id="claim-form">
+        <label>
+          Tu nombre
+          <input type="text" id="claim-name" required placeholder="Ej. María Torres" maxlength="60">
+        </label>
+        <label id="claim-qty-wrap" style="display:none">
+          Cantidad que llevarás
+          <input type="number" id="claim-qty" min="1" value="1">
+        </label>
+        <button type="submit" class="btn-primary">Confirmar reserva</button>
+      </form>
+      <p class="modal-error" id="claim-error"></p>
+    </div>
+  </div>
 
-    <footer class="site-footer">
-      <span class="paw paw-12" aria-hidden="true"></span>
-      <p class="footer-thanks"><svg viewBox="0 0 100 100" fill="currentColor">
-          <ellipse cx="50" cy="64" rx="22" ry="25" />
-          <ellipse cx="19" cy="30" rx="11" ry="14" transform="rotate(-24 19 30)" />
-          <ellipse cx="50" cy="16" rx="11" ry="14" />
-          <ellipse cx="81" cy="30" rx="11" ry="14" transform="rotate(24 81 30)" />
-        </svg>Gracias por ser parte de esta gran aventura<svg viewBox="0 0 100 100" fill="currentColor">
-          <ellipse cx="50" cy="64" rx="22" ry="25" />
-          <ellipse cx="19" cy="30" rx="11" ry="14" transform="rotate(-24 19 30)" />
-          <ellipse cx="50" cy="16" rx="11" ry="14" />
-          <ellipse cx="81" cy="30" rx="11" ry="14" transform="rotate(24 81 30)" />
-        </svg></p>
-      <button class="admin-link" id="admin-toggle">¿Eres el organizador?</button>
-    </footer>
 
-    <div class="modal-backdrop" id="claim-modal">
-      <div class="modal">
-        <button class="modal-close" data-close="claim-modal" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-            <path d="M6 6l12 12M18 6 6 18" />
-          </svg></button>
-        <h3 id="claim-modal-title">Reservar regalo</h3>
-        <p class="modal-sub" id="claim-modal-sub"></p>
-        <form id="claim-form">
+  <div class="modal-backdrop" id="pin-modal">
+    <div class="modal">
+      <button class="modal-close" data-close="pin-modal" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg></button>
+      <h3>Acceso de organizador</h3>
+      <p class="modal-sub">Ingresa el PIN para agregar o quitar regalos.</p>
+      <form id="pin-form">
+        <label>
+          PIN
+          <input type="password" id="pin-input" required inputmode="numeric" maxlength="12">
+        </label>
+        <button type="submit" class="btn-primary">Entrar</button>
+      </form>
+      <p class="modal-error" id="pin-error"></p>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="admin-modal">
+    <div class="modal modal-wide">
+      <button class="modal-close" data-close="admin-modal" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg></button>
+      <h3>Panel de organizador</h3>
+
+      <details class="admin-block" id="admin-block-gift" open>
+        <summary>Agregar regalo</summary>
+        <form id="gift-form">
           <label>
-            Tu nombre
-            <input type="text" id="claim-name" required placeholder="Ej. María Torres" maxlength="60">
+            Nombre del regalo
+            <input type="text" id="gift-name" required placeholder="Ej. Coche de bebé" maxlength="60">
           </label>
-          <label id="claim-qty-wrap" style="display:none">
-            Cantidad que llevarás
-            <input type="number" id="claim-qty" min="1" value="1">
-          </label>
-          <button type="submit" class="btn-primary">Confirmar reserva</button>
-        </form>
-        <p class="modal-error" id="claim-error"></p>
-      </div>
-    </div>
-
-
-    <div class="modal-backdrop" id="pin-modal">
-      <div class="modal">
-        <button class="modal-close" data-close="pin-modal" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-            <path d="M6 6l12 12M18 6 6 18" />
-          </svg></button>
-        <h3>Acceso de organizador</h3>
-        <p class="modal-sub">Ingresa el PIN para agregar o quitar regalos.</p>
-        <form id="pin-form">
+          <div class="form-row">
+            <label>
+              Categoría
+              <select id="gift-category">
+                <option value="cuna">Cuna</option>
+                <option value="panales">Pañales</option>
+                <option value="ropa">Ropa</option>
+                <option value="bano">Baño</option>
+                <option value="juguete">Juguetes</option>
+                <option value="otro">Otro</option>
+              </select>
+            </label>
+            <label>
+              Cantidad necesaria
+              <input type="number" id="gift-qty" min="1" value="1">
+            </label>
+          </div>
           <label>
-            PIN
-            <input type="password" id="pin-input" required inputmode="numeric" maxlength="12">
+            Nota (opcional)
+            <input type="text" id="gift-note" placeholder="Ej. Color azul, talla RN" maxlength="120">
           </label>
-          <button type="submit" class="btn-primary">Entrar</button>
+          <label>
+            Link de imagen (opcional)
+            <input type="text" id="gift-image" placeholder="https://i.imgur.com/ejemplo.jpg">
+          </label>
+          <p class="upload-status" id="upload-status"></p>
+          <div class="image-preview-wrap" id="image-preview-wrap" hidden>
+            <p class="image-preview-label">Vista previa:</p>
+            <div class="image-preview-box" id="image-preview-box"></div>
+          </div>
+          <button type="submit" class="btn-primary">Agregar a la lista</button>
         </form>
-        <p class="modal-error" id="pin-error"></p>
-      </div>
+      </details>
+
+      <details class="admin-block" id="admin-block-event">
+        <summary>Editar datos del evento</summary>
+        <form id="event-form">
+          <label>
+            Título
+            <input type="text" id="event-title-input" maxlength="60">
+          </label>
+          <label>
+            Mensaje
+            <input type="text" id="event-message-input" maxlength="160">
+          </label>
+          <label>
+            Fecha y hora del evento (para la cuenta regresiva)
+            <input type="datetime-local" id="event-datetime-input">
+          </label>
+          <div class="form-row">
+            <label>
+              Fecha (texto visible)
+              <input type="text" id="event-date-input" placeholder="15 de noviembre, 2026">
+            </label>
+            <label>
+              Hora (texto visible)
+              <input type="text" id="event-time-input" placeholder="4:00 PM">
+            </label>
+          </div>
+          <label>
+            Lugar (texto visible)
+            <input type="text" id="event-place-input" placeholder="Casa de la abuela">
+          </label>
+          <label>
+            Link de Google Maps (opcional)
+            <input type="text" id="event-maps-input"
+              placeholder="https://maps.app.goo.gl/... o https://maps.google.com/...">
+          </label>
+          <button type="submit" class="btn-primary">Guardar datos</button>
+        </form>
+      </details>
+
+      <details class="admin-block" id="admin-block-list">
+        <summary>Regalos actuales</summary>
+        <div id="admin-gift-list" class="admin-gift-list"></div>
+      </details>
+
+      <p class="modal-error" id="admin-error"></p>
     </div>
+  </div>
 
-    <div class="modal-backdrop" id="admin-modal">
-      <div class="modal modal-wide">
-        <button class="modal-close" data-close="admin-modal" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-            <path d="M6 6l12 12M18 6 6 18" />
-          </svg></button>
-        <h3>Panel de organizador</h3>
-
-        <details class="admin-block" id="admin-block-gift" open>
-          <summary>Agregar regalo</summary>
-          <form id="gift-form">
-            <label>
-              Nombre del regalo
-              <input type="text" id="gift-name" required placeholder="Ej. Coche de bebé" maxlength="60">
-            </label>
-            <div class="form-row">
-              <label>
-                Categoría
-                <select id="gift-category">
-                  <option value="cuna">Cuna</option>
-                  <option value="panales">Pañales</option>
-                  <option value="ropa">Ropa</option>
-                  <option value="bano">Baño</option>
-                  <option value="juguete">Juguetes</option>
-                  <option value="otro">Otro</option>
-                </select>
-              </label>
-              <label>
-                Cantidad necesaria
-                <input type="number" id="gift-qty" min="1" value="1">
-              </label>
-            </div>
-            <label>
-              Nota (opcional)
-              <input type="text" id="gift-note" placeholder="Ej. Color azul, talla RN" maxlength="120">
-            </label>
-            <label>
-              Link de imagen (opcional)
-              <input type="text" id="gift-image" placeholder="https://i.imgur.com/ejemplo.jpg">
-            </label>
-            <p class="upload-status" id="upload-status"></p>
-            <div class="image-preview-wrap" id="image-preview-wrap" hidden>
-              <p class="image-preview-label">Vista previa:</p>
-              <div class="image-preview-box" id="image-preview-box"></div>
-            </div>
-            <button type="submit" class="btn-primary">Agregar a la lista</button>
-          </form>
-        </details>
-
-        <details class="admin-block" id="admin-block-event">
-          <summary>Editar datos del evento</summary>
-          <form id="event-form">
-            <label>
-              Título
-              <input type="text" id="event-title-input" maxlength="60">
-            </label>
-            <label>
-              Mensaje
-              <input type="text" id="event-message-input" maxlength="160">
-            </label>
-            <label>
-              Fecha y hora del evento (para la cuenta regresiva)
-              <input type="datetime-local" id="event-datetime-input">
-            </label>
-            <div class="form-row">
-              <label>
-                Fecha (texto visible)
-                <input type="text" id="event-date-input" placeholder="15 de noviembre, 2026">
-              </label>
-              <label>
-                Hora (texto visible)
-                <input type="text" id="event-time-input" placeholder="4:00 PM">
-              </label>
-            </div>
-            <label>
-              Lugar (texto visible)
-              <input type="text" id="event-place-input" placeholder="Casa de la abuela">
-            </label>
-            <label>
-              Link de Google Maps (opcional)
-              <input type="text" id="event-maps-input"
-                placeholder="https://maps.app.goo.gl/... o https://maps.google.com/...">
-            </label>
-            <button type="submit" class="btn-primary">Guardar datos</button>
-          </form>
-        </details>
-
-        <details class="admin-block" id="admin-block-list">
-          <summary>Regalos actuales</summary>
-          <div id="admin-gift-list" class="admin-gift-list"></div>
-        </details>
-
-        <p class="modal-error" id="admin-error"></p>
-      </div>
-    </div>
-
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
-    <script src="firebase-config.js"></script>
-    <script src="app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
 </body>
 
 </html>

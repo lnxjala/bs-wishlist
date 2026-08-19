@@ -19,7 +19,7 @@
   --radius-lg: 24px;
   --radius-md: 16px;
   --radius-sm: 10px;
-  --nav-height: 60px;
+  --nav-height: 65px;
 }
 
 * {
@@ -29,6 +29,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--nav-height) + 12px);
+  overflow-x: hidden;
 }
 
 body {
@@ -39,12 +40,23 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   padding-bottom: env(safe-area-inset-bottom);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 img {
   max-width: 100%;
 }
+
+.dorado {
+  background: linear-gradient(to bottom, #cfac62 0%, #ffebb3 50%, #b38938 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
 
 .paw {
   position: absolute;
@@ -239,16 +251,20 @@ img {
 .nav-inner {
   max-width: 960px;
   height: 100%;
-  margin: 0 auto;
+  margin: 8px auto;
   padding: 0 20px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  text-align: center;
+  position: relative;
 }
 
 .nav-brand-img {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
   display: block;
 }
@@ -277,15 +293,22 @@ img {
   .nav-links {
     gap: 12px;
   }
+  .nav-inner {
+    margin-top: 13px;
+  }
 
   .nav-links a {
     font-size: 0.82rem;
   }
+  .nav-brand-img {
+  width: 40px;
+  height: 40px;
+}
 }
 
 .section-divider {
   max-width: 620px;
-  margin: 40px auto 0;
+  margin: 10px auto 0;
   border: none;
   border-top: 2px dashed var(--line);
 }
@@ -392,15 +415,25 @@ img {
   text-transform: uppercase;
   color: var(--white);
   background: var(--olive);
-  padding: 7px 22px;
+  padding: 10px 22px;
   border-radius: 999px;
-  margin: 14px 0 18px;
+  margin: 0px 0 18px;
 }
 
 .hero-message {
-  font-size: 1rem;
+  padding-top: 10px;
+  font-size: 1.2rem;
   color: var(--ink-soft);
   margin: 0 auto;
+}
+
+.hero-message-title {
+  color: var(--ink-soft);
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0;
+  padding-top: 10px;
+
 }
 
 @media (max-width: 900px) {
@@ -411,11 +444,27 @@ img {
   .hero-inner {
     max-width: 460px;
   }
+
+  .hero-message {
+    font-size: 1.1rem;
+  }
+
+  .hero-message-title {
+    font-size: 1.1rem;
+  }
 }
 
 @media (max-width: 420px) {
   .hero-dino {
     display: none;
+  }
+
+  .hero-message {
+    font-size: 1rem;
+  }
+
+  .hero-message-title {
+    font-size: 1rem;
   }
 }
 
@@ -630,9 +679,10 @@ img {
 
 .countdown-num {
   font-family: var(--font-display);
-  font-size: clamp(1.15rem, 6vw, 2.2rem);
+  font-size: clamp(1.25rem, 6vw, 2.2rem);
   font-weight: 600;
-  color: var(--olive-dark);
+  color: var(--gold);
+  /* color: var(--olive-dark); */
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
@@ -668,7 +718,7 @@ img {
     width: 60px;
     right: -2px;
     bottom: auto;
-    top: 130px;
+    top: 140px;
   }
 }
 
@@ -676,7 +726,7 @@ img {
   position: relative;
   max-width: 720px;
   margin: 32px auto 0;
-  padding: 28px 24px;
+  padding: 12px 24px;
   text-align: center;
 }
 
@@ -689,13 +739,23 @@ img {
 }
 
 .confirm-dino-left {
-  left: 56px;
+  left: 20px;
+
 }
 
 
 @media (max-width: 450px) {
   .confirm-dino-left {
     left: 30px;
+  }
+
+  .confirm-dino {
+    bottom: -10px;
+    left: -4px;
+  }
+
+  .confirm-text {
+    margin-bottom: 0;
   }
 }
 
@@ -803,6 +863,10 @@ img {
   .confirm-dino {
     width: 80px;
   }
+
+  .confirm-text {
+    margin-bottom: 0;
+  }
 }
 
 @media (max-width: 400px) {
@@ -845,7 +909,7 @@ img {
   position: relative;
   max-width: 960px;
   margin: 0 auto;
-  padding: 16px 0 48px;
+  padding: 32px 0 48px;
   scroll-margin-top: var(--nav-height);
   overflow: hidden;
 }
@@ -1141,6 +1205,10 @@ img {
   .btn-page {
     padding: 10px 14px;
     font-size: 0.76rem;
+  }
+
+  .site-nav {
+    height: var(--nav-height) + 8px;
   }
 }
 
@@ -1441,38 +1509,63 @@ img {
 }
 
 .music-toggle {
-  position: fixed;
-  bottom: calc(16px + env(safe-area-inset-bottom));
-  right: 16px;
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
   width: 48px;
   height: 48px;
+
   border-radius: 50%;
   border: 1px solid var(--sage);
   background: var(--white);
+
   box-shadow: 0 4px 12px rgba(95, 108, 70, 0.16);
+
   cursor: pointer;
   z-index: 180;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   font-size: 1.2rem;
-  transition: transform 0.15s ease;
 }
 
-.music-toggle:hover {
-  transform: scale(1.08);
+/* Texto DALE PLAY */
+.music-toggle-label {
+  position: absolute;
+
+  width: 100px;
+  height: 100px;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  overflow: visible;
+  pointer-events: none;
+
+  z-index: 1;
 }
 
-.music-toggle.playing {
-  background: var(--olive);
-  border-color: var(--olive-dark);
+.music-toggle-label text {
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  fill: var(--ink-soft);
 }
 
-.music-toggle.playing .music-icon {
-  color: var(--white);
-}
-
+/* El icono queda encima del texto */
 .music-icon {
+  position: relative;
+  z-index: 2;
+
   line-height: 1;
   display: flex;
   color: var(--olive-dark);
@@ -1527,6 +1620,16 @@ img {
   .form-row {
     flex-direction: column;
     gap: 14px;
+  }
+
+  .music-toggle {
+    width: 44px;
+    height: 44px;
+  }
+
+  .music-toggle::before {
+    font-size: 0.5rem;
+    bottom: 44px;
   }
 }
 
