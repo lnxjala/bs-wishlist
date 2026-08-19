@@ -13,7 +13,8 @@
   --line: #dcd6c2;
 
   --font-display: 'Fredoka', sans-serif;
-  --font-script: 'Caveat', cursive;
+  --font-script: "Great Vibes", cursive;
+  ;
   --font-body: 'Nunito', sans-serif;
 
   --radius-lg: 24px;
@@ -293,6 +294,7 @@ img {
   .nav-links {
     gap: 12px;
   }
+
   .nav-inner {
     margin-top: 13px;
   }
@@ -300,10 +302,11 @@ img {
   .nav-links a {
     font-size: 0.82rem;
   }
+
   .nav-brand-img {
-  width: 40px;
-  height: 40px;
-}
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .section-divider {
@@ -389,21 +392,24 @@ img {
 .hero-title {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(2.6rem, 9vw, 4.4rem);
+  font-size: clamp(2rem, 9vw, 3rem);
   line-height: 0.95;
   margin: 0 0 6px;
   color: var(--olive-dark);
   letter-spacing: -0.01em;
+  text-align: center;
 }
 
 .hero-script {
+  margin-top: 20px;
+  margin-right: 14px;
   font-family: var(--font-script);
   font-weight: 700;
   color: var(--gold);
-  font-size: 1.5em;
+  font-size: 1.35em;
   line-height: 1;
   display: inline-block;
-  transform: rotate(-2deg);
+  transform: rotate(-1deg);
 }
 
 .hero-tag {
@@ -422,7 +428,7 @@ img {
 
 .hero-message {
   padding-top: 10px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: var(--ink-soft);
   margin: 0 auto;
 }
@@ -430,9 +436,9 @@ img {
 .hero-message-title {
   color: var(--ink-soft);
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin: 0;
-  padding-top: 10px;
+  padding-top: 6px;
 
 }
 
@@ -460,12 +466,24 @@ img {
   }
 
   .hero-message {
-    font-size: 1rem;
+    padding: 2px;
+    font-size: .85rem;
   }
 
   .hero-message-title {
-    font-size: 1rem;
+    padding: 0;
+    font-size: .9rem;
+    font-style: italic;
   }
+
+  .hero-title {
+    font-size: clamp(2rem, 9vw, 1.4rem);
+  }
+
+  .hero-script {
+    font-size: 1.5em;
+  }
+
 }
 
 .details-section {
@@ -720,6 +738,12 @@ img {
     bottom: auto;
     top: 140px;
   }
+
+  .confirm-dino {
+    top: 100px;
+    left: -4px;
+    width: 20px;
+  }
 }
 
 .confirm-section {
@@ -861,7 +885,7 @@ img {
 
 @media (max-width: 560px) {
   .confirm-dino {
-    width: 80px;
+    width: 60px;
   }
 
   .confirm-text {
